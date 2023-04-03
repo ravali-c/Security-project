@@ -2,21 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Simple ASP Website</title>
+    <title>Retail Stores</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src='//www.aa.com/jquery.js'></script>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <script src="fuzzyset.js"></script>
 
     <style>
       #voice-input-btn {
-        background-color: #4CAF50;
+        background-color: aqua;
         border: none;
         color: white;
-        padding: 10px;
+        padding: 16px 22px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
@@ -34,38 +34,123 @@
     </style>
   </head>
   <body>
-    <h1>Ask a Question</h1>
+    <div class="main">	
+   <div class="Stores">	
+   <div class="content">	
+    <h1>Hello Customers, How can I help you?</h1>
     <div id="answer"></div>
     <button id="voice-input-btn"><i class="fa fa-microphone"></i></button>
     <input type="text" id="text-input" placeholder="Type your question...">
     <button id="submit-btn">Submit</button>
-    <div id="answer-box"></div>
+    <!-- <div id="answer-box"></div> -->	
+   </div>	
+   </div>	
+  </div>
 
     <script>
       
       var isClose=true;
         const stopwords = ["of", "the", "a", "an", "any", "is", "can", "who", "what", "why", "whom"];
         var editor = "sorts\n" +
-            "    #people = {tommy, alex, john, daniel, sarah, peter, lino}.\n" +
-            "    #gender = {male, female}.\n" +
+            “ #types = {veggies,appliances,meat,clothes,dailycare}.\n”+
+    “#veggies={carrot,tomato,peppers}.\n”+
+    “#appliances={refrigerator,oven,mobile}.\n”+
+    “#meat={beef,pork,lamb}.\n”+
+    “#clothes={tshirt,hoodie,jeans}.\n”+
+    “#dailycare={toothpaste,shampoo,soap}.\n”+
+    “#availability={available,unavailable}.\n”+
+   “#price={10,20,30,40,50,60,70,200,400,600,800}.\n”+
+    “#location={aislea1,aislea2,aisleb1,aisleb2,aislec1}.\n”+
+      
             "predicates\n" +
-            "    advisor(#people, #people).\n" +
-            "    friend(#people, #people).\n" +
-            "    gender(#people,#gender).\n" +
-            "    spanish(#people).\n" +
+            “items(#types). \n”+
+    “veggies(#veggies). \n”+
+    “appliances(#appliances). \n”+
+    “meat(#meat). \n”+
+    “clothes(#clothes). \n”+
+    “dailycare(#dailycare). \n”+
+   “pricev(#price,#veggies). \n”+
+    “pricea(#price,#appliances). \n”+
+    “pricem(#price,#meat). \n”+
+    “pricec(#price,#clothes). \n”+
+    “priced(#price,#dailycare). \n”+
+    “instockv(#availability,#veggies). \n”+
+    “instocka(#availability,#appliances). \n”+
+    “instockm(#availability,#meat). \n”+
+    “instockc(#availability,#clothes). \n”+
+    “instockd(#availability,#dailycare). \n”+
+    “placev(#location,#veggies). \n”+
+    “placea(#location,#appliances). \n”+
+    “placem(#location,#meat). \n”+
+    “placec(#location,#clothes). \n”+
+    “placed(#location,#dailycare). \n”+
+      
             "rules\n" +
-            "    advisor(tommy, alex).\n" +
-            "    advisor(tommy, john).\n" +
-            "    advisor(tommy, daniel).\n" +
-            "    advisor(tommy, lino).\n" +
-            "    friend(lino, alex).\n" +
-            "    friend(lino, peter).\n" +
-            "    friend(sarah, alex).\n" +
-            "    friend(X, Y):-friend(Y,X).\n" +
-            "    gender(tommy,male).\n" +
-            "    gender(lino,male).\n" +
-            "    gender(sarah, female).\n" +
-            "    spanish(lino).";
+           “items(veggies). \n”+
+    “items(appliances). \n”+
+    “items(meat). \n”+
+    “items(clothes). \n”+
+    “items(dailycare). \n”+
+    “veggies(tomato). \n”+
+    “veggies(carrot). \n”+
+    “veggies(peppers). \n”+
+    “appliances(refrigerator). \n”+
+    “appliances(oven). \n”+
+    “appliances(mobile). \n”+
+    “meat(beef). \n”+
+    “meat(pork). \n”+
+    “meat(lamb). \n”+
+    “clothes(tshirt). \n”+
+    “clothes(hoodie). \n”+
+    “clothes(jeans). \n”+
+   “dailycare(toothpaste). \n”+
+    “dailycare(shampoo). \n”+
+    “dailycare(soap). \n”+
+    “instockv(available,tomato). \n”+
+    “instockv(unavailable,carrot). \n”+
+    “instockv(available,peppers). \n”+
+    “instocka(available,refrigerator). \n”+
+    “instocka(unavailable,oven). \n”+
+    “instocka(available,mobile). \n”+
+    “instockm(available,beef). \n”+
+   “ instockm(available,pork). \n”+
+    “instockm(unavailable,lamb). \n”+
+   “ instockc(unavailable,tshirt). \n”+
+    “instockc(available,hoodie). \n”+
+   “ instockc(available,jeans). \n”+
+    “instockd(available,toothpaste). \n”+
+    “instockd(available,shampoo). \n”+
+    “instockd(unavailable,soap). \n”+
+    “placev(aislea1,tomato). \n”+
+   “ placev(aislea1,carrot). \n”+
+    “placev(aislea1,peppers). \n”+
+   “ placea(aislea2,refrigerator). \n”+
+    “placea(aislea2,oven). \n”+
+    “placea(aislea2,mobile). \n”+
+    “placem(aisleb1,beef). \n”+
+    “placem(aisleb1,pork). \n”+
+    “placem(aisleb1,lamb). \n”+
+    “placec(aisleb2,tshirt). \n”+
+    “placec(aisleb2,hoodie). \n”+
+    “placec(aisleb2,jeans). \n”+
+    “placed(aislec1,toothpaste). \n”+
+    “placed(aislec1,shampoo). \n”+
+    “placed(aislec1,soap). \n”+
+    “pricev(10,carrot). \n”+
+    “pricev(10,tomato). \n”+
+    “pricev(10,peppers). \n”+
+    “pricea(600,refrigerator). \n”+
+    “pricea(200,oven). \n”+
+    “pricea(800,mobile). \n”+
+    “pricem(30,beef). \n”+
+    “pricem(40,pork). \n”+
+    “pricem(50,lamb). \n”+
+    “pricec(20,tshirt). \n”+
+    “pricec(30,hoodie). \n”+
+    “pricec(30,jeans). \n”+
+    “priced(10,toothpaste). \n”+
+    “priced(10,shampoo). \n”+
+    “priced(10,soap). \n”+
         // sorts
         var contstring = editor.split("sorts\n")[1].split("predicates\n");
         var sortstring = contstring[0].split('.');
